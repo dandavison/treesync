@@ -1,0 +1,3 @@
+[submodule "cmdline"]
+	path = cmdline
+	url = /usr/local/src/cmdline
