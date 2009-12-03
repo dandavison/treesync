@@ -40,16 +40,26 @@ def sync(source, dest):
 
 def copy(fname, source, dest):
     if settings.verbose:
-        log('%s' % os.path.join(os.path.basename(source), fname))
+        log(os.path.join(source, fname))
+    sourcef = os.path.join(source, fname)
+    destf = os.path.join(dest, fname)
+    cmd = 'cp -r "%s" "%s"' % (sourcef, destf)
     if not settings.dry_run:
-        system('cp -rv "%s" "%s"' %
-               (os.path.join(source, fname), os.path.join(dest, fname)))
-
+        try:
+            system(cmd)
+        except Exception, e:
+            sys.stderr.write('Failed to copy %s to %s: %s' % (sourcef, destf, e))
+        
 def delete(fname, dest):
     if settings.verbose:
-        log('Deleting %s' % os.path.join(os.path.basename(dest), fname))
+        log('__Deleting__ %s' % os.path.join(dest, fname))
+    destf = os.path.join(dest, fname)
+    cmd = 'rm -r "%s"' % os.path.join(dest, fname)
     if not settings.dry_run:
-        system('rm -rv "%s"' % os.path.join(dest, fname))
+        try:
+            system(cmd)
+        except Exception, e:
+            sys.stderr.write('Failed to delete %s: %s' % (destf, e))
 
 def log(msg):
     if not settings.quiet:
