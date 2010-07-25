@@ -67,6 +67,7 @@ def copy(fname, source, dest):
             system(cmd)
         except Exception, e:
             sys.stderr.write('Failed to copy %s to %s: %s' % (sourcef, destf, e))
+            raise
         
 def delete(fname, dest):
     if settings.verbose:
@@ -78,6 +79,7 @@ def delete(fname, dest):
             system(cmd)
         except Exception, e:
             sys.stderr.write('Failed to delete %s: %s' % (destf, e))
+            raise
 
 def log(msg):
     if not settings.quiet:
