@@ -1,0 +1,22 @@
+Rapid, content-blind syncing of directory trees. Like rsync, but works
+with file-names only: if the file names are the same, the content is
+assumed to be the same. Useful for maintaining back-ups of large
+collections of files, for example an MP3 library.
+
+#+begin_src sh
+~> treesync --help
+Usage: treesync tree1 tree2
+
+Options:
+  -h, --help        show this help message and exit
+  --debug           show debug messages and pass exceptions
+  -v, --verbose     show informational messages
+  -q, --quiet       do not show log messages on console
+  --log=FILE        append logging data to FILE
+  --loglevel=LEVEL  set log level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  -n, --dry-run     Just print shell commands; don't actually do anything
+  -d, --delete      Delete files from receiver that do not exist in sender
+  --delete-only     Delete files from receiver that do not exist in sender,
+                    and do not copy files.
+~> treesync -dv /path/to/source/root /path/to/destination/root
+#+end_src
