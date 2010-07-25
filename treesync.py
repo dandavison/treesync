@@ -34,6 +34,9 @@ class Treesync(CommandLineApp):
         op.add_option('-d', '--delete', dest='delete', default=False, action='store_true',
                       help="Delete files from receiver that do not exist in sender")
 
+        op.add_option('--delete-only', dest='delete_only', default=False, action='store_true',
+                      help="Delete files from receiver that do not exist in sender, and do not copy files.")
+
     def main(self, source, dest):
         global settings
         settings = self.options
@@ -43,11 +46,12 @@ def sync(source, dest):
     """Compare top-level contents. If unequal, carry out equalising
     shell commands; recursively synchronise subdirectories."""
     dcmp = dircmp(source, dest)
-    for f in dcmp.left_only:
-        copy(f, source, dest)
     if settings.delete:
         for f in dcmp.right_only:
             delete(f, dest)
+    if not settings.delete_only:
+        for f in dcmp.left_only:
+            copy(f, source, dest)
     dcmp = dircmp(source, dest)
     for d in dcmp.common_dirs:
         sync(os.path.join(source, d), os.path.join(dest, d))
