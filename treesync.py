@@ -72,7 +72,7 @@ def delete(fname, dest):
     if settings.verbose:
         log('__Deleting__ %s' % os.path.join(dest, fname))
     destf = os.path.join(dest, fname)
-    cmd = 'rm -r "%s"' % os.path.join(dest, fname)
+    cmd = 'rm -rf "%s"' % os.path.join(dest, fname)
     if not settings.dry_run:
         try:
             system(cmd)
